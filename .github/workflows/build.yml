@@ -5,22 +5,27 @@ on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FLET_CLI_NO_RICH_OUTPUT: 1
+      PYTHONUTF8: 1
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build APK
-        uses: flet-dev/flet-build-action@v1
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          target: apk
-          working-directory: .
-          runner-python-version: '3.11'
-          bundled-python-version: '3.11'
+          python-version: '3.11'
+
+      - name: Install Flet
+        run: pip install flet
+
+      - name: Build APK
+        run: flet build apk --yes --no-rich-output
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: ChadTracker-APK
-          path: ${{ steps.build.outputs.archive-path }}
-          archive: false
-          if-no-files-found: error
+          path: build/app/outputs/flutter-apk/app-release.apkэ
+          
