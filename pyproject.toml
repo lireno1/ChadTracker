@@ -1,0 +1,12 @@
+[project]
+name = "chadtracker"
+version = "0.1.0"
+description = "My personal Chad Tracker app"
+requires-python = ">=3.11"
+dependencies = [
+    "flet",
+]
+
+[tool.flet]
+org = "com.chadtracker"
+product = "Chad Tracker"
